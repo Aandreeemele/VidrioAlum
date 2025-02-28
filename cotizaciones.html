@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cotización - VidrioAlum</title>
+    <link rel="stylesheet" href="cotizaciones.css">
+    <script>
+        let productos = [];
+
+        function agregarProducto() {
+            const cantidad = parseFloat(document.getElementById("cantidad").value) || 0;
+            const descripcion = document.getElementById("descripcion").value || "Descripción no especificada";
+            const precioUnidad = parseFloat(document.getElementById("precioUnidad").value) || 0;
+            const total = cantidad * precioUnidad;
+
+            if (cantidad === 0 || precioUnidad === 0) {
+                alert("Por favor, complete todos los campos del producto.");
+                return;
+            }
+
+            productos.push({ cantidad, descripcion, precioUnidad, total });
+
+            actualizarTabla();
+            limpiarCamposProducto();
+        }
+
+        function actualizarTabla() {
+            const tabla = document.getElementById("tablaProductos");
+            tabla.innerHTML = `
+                <tr>
+                    <th>Cantidad</th>
+                    <th>Descripción</th>
+                    <th>Precio Unitario</th>
+                    <th>Total</th>
+                </tr>
+            `;
+
+            productos.forEach(producto => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${producto.cantidad}</td>
+                    <td>${producto.descripcion}</td>
+                    <td>${producto.precioUnidad.toFixed(2)}</td>
+                    <td>${producto.total.toFixed(2)}</td>
+                `;
+                tabla.appendChild(row);
+            });
+        }
+
+        function limpiarCamposProducto() {
+            document.getElementById("cantidad").value = "";
+            document.getElementById("descripcion").value = "";
+            document.getElementById("precioUnidad").value = "";
+        }
+
+        function generarCotizacion() {
+            const fecha = document.getElementById("fecha").value;
+            const cliente = document.getElementById("cliente").value;
+            const direccion = document.getElementById("direccion").value;
+            const atencion = document.getElementById("atencion").value;
+            const nit = document.getElementById("nit").value;
+            
+            if (!fecha || !cliente || !direccion || !atencion || !nit) {
+                alert("Por favor, complete todos los campos.");
+                return;
+            }
+
+            if (productos.length === 0) {
+                alert("Debe agregar al menos un producto.");
+                return;
+            }
+
+            let totalCotizacion = 0;
+            productos.forEach(producto => {
+                totalCotizacion += producto.total;
+            });
+
+            document.getElementById("cotizacion").style.display = "block";
+            document.getElementById("fechaDisplay").innerText = fecha;
+            document.getElementById("clienteDisplay").innerText = cliente;
+            document.getElementById("direccionDisplay").innerText = direccion;
+            document.getElementById("atencionDisplay").innerText = atencion;
+            document.getElementById("nitDisplay").innerText = nit;
+
+            const tablaCotizacion = document.getElementById("tablaCotizacion");
+            tablaCotizacion.innerHTML = `
+                <tr>
+                    <th>Cantidad</th>
+                    <th>Descripción</th>
+                    <th>Precio Unitario</th>
+                    <th>Total</th>
+                </tr>
+            `;
+            
+            productos.forEach(producto => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${producto.cantidad}</td>
+                    <td>${producto.descripcion}</td>
+                    <td>${producto.precioUnidad.toFixed(2)}</td>
+                    <td>${producto.total.toFixed(2)}</td>
+                `;
+                tablaCotizacion.appendChild(row);
+            });
+
+            document.getElementById("totalCotizacion").innerText = "Q" + totalCotizacion.toFixed(2);
+
+            document.getElementById("formularioDatos").style.display = "none";
+            document.getElementById("formularioProducto").style.display = "none";
+        }
+    </script>
+</head>
+<body>
+    <section class="contenedor3">
+        <!-- Formulario de ingreso de datos -->
+        <div id="formularioDatos" class="formulario">
+            <h3>Ingrese los datos de la cotización:</h3>
+            <label for="fecha">Fecha:</label>
+            <input type="date" id="fecha" name="fecha">
+            <label for="cliente">Cliente:</label>
+            <input type="text" id="cliente" name="cliente">
+            <label for="direccion">Dirección:</label>
+            <input type="text" id="direccion" name="direccion">
+            <label for="atencion">Atención:</label>
+            <input type="text" id="atencion" name="atencion">
+            <label for="nit">NIT:</label>
+            <input type="text" id="nit" name="nit">
+            <button type="button" onclick="generarCotizacion()">Generar Cotización</button>
+        </div>
+
+        <!-- Formulario de productos -->
+        <div id="formularioProducto" class="formulario">
+            <h3>Ingrese los detalles del producto:</h3>
+            <label for="cantidad">Cantidad:</label>
+            <input type="number" id="cantidad" name="cantidad" placeholder="Cantidad">
+            <label for="descripcion">Descripción:</label>
+            <input type="text" id="descripcion" name="descripcion" placeholder="Descripción del producto">
+            <label for="precioUnidad">Precio Unitario:</label>
+            <input type="number" id="precioUnidad" name="precioUnidad" placeholder="Precio Unitario">
+            <button type="button" onclick="agregarProducto()">Agregar Producto</button>
+        </div>
+
+        <!-- Cotización generada -->
+        <div id="cotizacion" class="cotizacion" style="display:none;">
+            <div class="encabezado-cotizacion">
+                <h1>VIDRIOALUM</h1>
+                <p>Puertas, Ventanas, Mostradores, Vitrinas en Aluminio y Vidrio</p>
+                <p>PVC Blanco e Imitación Madera, Vidrio Arenado y Vidrio Templado</p>
+                <hr>
+            </div>
+            <div class="datos-cliente">
+                <div><strong>Fecha:</strong> <span id="fechaDisplay"></span></div>
+                <div><strong>Cliente:</strong> <span id="clienteDisplay"></span></div>
+                <div><strong>Dirección:</strong> <span id="direccionDisplay"></span></div>
+                <div><strong>Atención:</strong> <span id="atencionDisplay"></span></div>
+                <div><strong>NIT:</strong> <span id="nitDisplay"></span></div>
+            </div>
+            <hr>
+            <div class="productos">
+                <h3>Detalle de Productos:</h3>
+                <table id="tablaCotizacion">
+                    <!-- Los productos se agregarán aquí dinámicamente -->
+                </table>
+            </div>
+            <div class="total">
+                <h3>Total de la Cotización: <span id="totalCotizacion"></span></h3>
+            </div>
+            <div class="nota">
+                <p><strong>Nota:</strong> 8 días hábiles para la entrega a partir de ser aprobado. Régimen: Sujeto a Retención Definitiva ISR.</p>
+            </div>
+            <div class="firma">
+                <p>Atentamente,</p>
+                <p>Carlos Meléndez</p>
+                <p>NIT: 4980686-6</p>
+            </div>
+        </div>
+
+        <a href="index.html" class="regresar">Regresar al principal</a>
+    </section>
+</body>
+</html>

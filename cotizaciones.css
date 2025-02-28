@@ -1,0 +1,185 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: rgb(12, 12, 48);
+    box-shadow: 0 50px 80px rgb(0, 0, 15);
+    margin: 0;
+    padding: 0;
+}
+
+.contenedor3 {
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+    grid-gap: 20px;
+    padding: 20px;
+}
+
+.formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 20px;
+    background-color: rgb(12, 12, 48);
+    box-shadow: 0 50px 80px rgb(0, 0, 15);
+    border-radius: 10px;
+color: white;
+}
+
+.formulario label {
+    font-weight: bold;
+}
+
+button {
+    padding: 10px;
+    background-color: #00aaff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #0088cc;
+}
+
+.cotizacion {
+    grid-column: 2/3;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.encabezado-cotizacion {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.encabezado-cotizacion h1 {
+    margin: 0;
+    color: #00aaff;
+}
+
+.encabezado-cotizacion p {
+    font-size: 1.1rem;
+    color: #333;
+}
+
+.datos-cliente div {
+    margin-bottom: 8px;
+    font-size: 1.1rem;
+}
+
+.datos-cliente strong {
+    color: #555;
+}
+
+.productos {
+    margin-top: 20px;
+}
+
+.productos h3 {
+    font-size: 1.2rem;
+    color: #00aaff;
+    margin-bottom: 10px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table th, table td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+table th {
+    background-color: #f1f1f1;
+}
+
+.nota {
+    margin-top: 20px;
+    font-size: 1rem;
+    background-color: #fffbcc;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.firma {
+    margin-top: 30px;
+    text-align: center;
+    font-size: 1.1rem;
+}
+
+.regresar {
+    display: block;
+    text-align: center;
+    background-color: #00aaff;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    margin-top: 20px;
+    width: 20rem;
+    height: 2rem;
+}
+
+.regresar:hover {
+    background-color: #0088cc;
+}
+
+/* Diseño Responsivo */
+@media (max-width: 768px) {
+    .contenedor3 {
+        grid-template-columns: 1fr 1fr;
+        padding: 10px;
+    }
+
+    .cotizacion {
+        grid-column: 1/3;
+    }
+
+    .regresar {
+        width: 100%;
+    }
+
+    table th, table td {
+        padding: 8px;
+    }
+
+    .formulario, .cotizacion {
+        padding: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .formulario {
+        padding: 10px;
+    }
+
+    button {
+        padding: 8px;
+    }
+
+    .regresar {
+        width: 100%;
+        font-size: 0.9rem;
+    }
+
+    .productos h3 {
+        font-size: 1rem;
+    }
+
+    .cotizacion, .formulario {
+        padding: 10px;
+    }
+
+    .encabezado-cotizacion h1 {
+        font-size: 1.5rem;
+    }
+
+    .encabezado-cotizacion p {
+        font-size: 1rem;
+    }
+}
